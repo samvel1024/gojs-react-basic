@@ -22,8 +22,28 @@ interface AppState {
     modelData: go.ObjectData;
     selectedData: go.ObjectData | null;
     skipsDiagramUpdate: boolean;
+    linkToPortIdProperty: string;
+    linkFromPortIdProperty: string;
+    copiesArrays: boolean;
+    copiesArrayObjcets: true;
 }
 
+/*
+{ "class": "GraphLinksModel",
+  "copiesArrays": true,
+  "copiesArrayObjects": true,
+  "linkFromPortIdProperty": "fromPort",
+  "linkToPortIdProperty": "toPort",
+  "nodeDataArray": [
+{"key":"Record1", "fields":[ {"name":"field1", "info":"", "color":"#F7B84B", "figure":"Ellipse"},{"name":"field2", "info":"the second one", "color":"#F25022", "figure":"Ellipse"},{"name":"fieldThree", "info":"3rd", "color":"#00BCF2"} ], "loc":"0 0"},
+{"key":"Record2", "fields":[ {"name":"fieldA", "info":"", "color":"#FFB900", "figure":"Diamond"},{"name":"fieldB", "info":"", "color":"#F25022", "figure":"Rectangle"},{"name":"fieldC", "info":"", "color":"#7FBA00", "figure":"Diamond"},{"name":"fieldD", "info":"fourth", "color":"#00BCF2", "figure":"Rectangle"} ], "loc":"250 0"}
+ ],
+  "linkDataArray": [
+{"from":"Record1", "fromPort":"field1", "to":"Record2", "toPort":"fieldA"},
+{"from":"Record1", "fromPort":"field2", "to":"Record2", "toPort":"fieldD"},
+{"from":"Record1", "fromPort":"fieldThree", "to":"Record2", "toPort":"fieldB"}
+ ]}
+ */
 class App extends React.Component<{}, AppState> {
     // Maps to store key -> arr index for quick lookups
     private mapNodeKeyIdx: Map<go.Key, number>;
@@ -32,18 +52,18 @@ class App extends React.Component<{}, AppState> {
     constructor(props: object) {
         super(props);
         this.state = {
-            nodeDataArray: [
-                {key: 0, text: 'Alpha', color: 'lightblue', loc: '0 0'},
-                {key: 1, text: 'Beta', color: 'orange', loc: '150 0'},
-                {key: 2, text: 'Gamma', color: 'lightgreen', loc: '0 150'},
-                {key: 3, text: 'Delta', color: 'pink', loc: '150 150'}
+            copiesArrays: true,
+            copiesArrayObjcets: true,
+            linkFromPortIdProperty: "fromPort",
+            linkToPortIdProperty: "toPort",
+            "nodeDataArray": [
+                {"key":"Record1", "fields":[ {"name":"field1", "info":"", "color":"#F7B84B", "figure":"Ellipse"},{"name":"field2", "info":"the second one", "color":"#F25022", "figure":"Ellipse"},{"name":"fieldThree", "info":"3rd", "color":"#00BCF2"} ], "loc":"0 0"},
+                {"key":"Record2", "fields":[ {"name":"fieldA", "info":"", "color":"#FFB900", "figure":"Diamond"},{"name":"fieldB", "info":"", "color":"#F25022", "figure":"Rectangle"},{"name":"fieldC", "info":"", "color":"#7FBA00", "figure":"Diamond"},{"name":"fieldD", "info":"fourth", "color":"#00BCF2", "figure":"Rectangle"} ], "loc":"280 0"}
             ],
-            linkDataArray: [
-                {key: -1, from: 0, to: 1},
-                {key: -2, from: 0, to: 2},
-                {key: -3, from: 1, to: 1},
-                {key: -4, from: 2, to: 3},
-                {key: -5, from: 3, to: 0}
+            "linkDataArray": [
+                {"from":"Record1", "fromPort":"field1", "to":"Record2", "toPort":"fieldA"},
+                {"from":"Record1", "fromPort":"field2", "to":"Record2", "toPort":"fieldD"},
+                {"from":"Record1", "fromPort":"fieldThree", "to":"Record2", "toPort":"fieldB"}
             ],
             modelData: {
                 canRelink: true
