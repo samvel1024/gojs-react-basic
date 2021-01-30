@@ -283,6 +283,8 @@ class App extends React.Component<{}, AppState> {
                 <DiagramWrapper
                     nodeDataArray={this.state.nodeDataArray}
                     linkDataArray={this.state.linkDataArray}
+                    linkFromPortIdProperty={this.state.linkFromPortIdProperty}
+                    linkToPortIdProperty={this.state.linkToPortIdProperty}
                     modelData={this.state.modelData}
                     skipsDiagramUpdate={this.state.skipsDiagramUpdate}
                     onDiagramEvent={this.handleDiagramEvent}

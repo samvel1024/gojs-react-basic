@@ -17,6 +17,8 @@ interface DiagramProps {
     skipsDiagramUpdate: boolean;
     onDiagramEvent: (e: go.DiagramEvent) => void;
     onModelChange: (e: go.IncrementalData) => void;
+    linkToPortIdProperty: string;
+    linkFromPortIdProperty: string;
 }
 
 export class DiagramWrapper extends React.Component<DiagramProps, {}> {
@@ -59,7 +61,7 @@ export class DiagramWrapper extends React.Component<DiagramProps, {}> {
             <ReactDiagram
                 ref={this.diagramRef}
                 divClassName='diagram-component'
-                initDiagram={this.initDiagram}
+                initDiagram={this.initDiagram.bind(this)}
                 nodeDataArray={this.props.nodeDataArray}
                 linkDataArray={this.props.linkDataArray}
                 modelData={this.props.modelData}
@@ -92,7 +94,9 @@ export class DiagramWrapper extends React.Component<DiagramProps, {}> {
                     layout: $(go.ForceDirectedLayout),
                     model: $(go.GraphLinksModel,
                         {
+                            linkFromPortIdProperty: this.props.linkFromPortIdProperty,
                             linkKeyProperty: 'key',  // IMPORTANT! must be defined for merges and data sync when using GraphLinksModel
+                            linkToPortIdProperty: this.props.linkToPortIdProperty,
                             // positive keys for nodes
                             makeUniqueKeyFunction: (m: go.Model, data: any) => {
                                 let k = data.key || 1;
